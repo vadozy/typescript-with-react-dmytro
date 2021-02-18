@@ -1,0 +1,26 @@
+{
+  "name": "simple-typescript",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "concurrently -k -n COMPILER,NODEMON -c yellow,magenta 'npm run build:watch' 'npm run nodemon'",
+    "build": "tsc",
+    "build:watch": "tsc -w",
+    "nodemon": "nodemon -w dist -q dist/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Vadim Storozhuk",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/react": "^17.0.2",
+    "concurrently": "^5.3.0",
+    "nodemon": "^2.0.7",
+    "typescript": "^4.1.5"
+  },
+  "dependencies": {
+    "apollo-client": "^2.6.10",
+    "react": "^17.0.1"
+  }
+}
