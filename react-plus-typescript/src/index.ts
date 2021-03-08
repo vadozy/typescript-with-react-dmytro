@@ -2,4 +2,12 @@ function log(s: string) {
   console.log(s);
 }
 
-log("Hello Typescript!!!");
+class A {
+  // greeting = "Hello World";
+
+  constructor(public greeting: string) {}
+}
+
+log(new A("Hello Babel World!!!").greeting);
+
+export {};
