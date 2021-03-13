@@ -26,7 +26,11 @@ class Cart extends React.Component<Props, State> {
   render() {
     return (
       <AppStateContext.Consumer>
-        {(state) => {
+        {(globalState) => {
+          const itemsCount = globalState.cart.items.reduce(
+            (acc, item) => acc + item.quantity,
+            0
+          );
           return (
             <div className={CartCSS.cartContainer}>
               <button
@@ -35,14 +39,14 @@ class Cart extends React.Component<Props, State> {
                 onClick={this.handleClick}
               >
                 <FiShoppingCart />
-                <span>{state.cart.items.length} pizza(s)</span>
+                <span>{itemsCount} pizza(s)</span>
               </button>
               <div
                 className={CartCSS.cartDropDown}
                 style={{ display: this.state.isOpen ? 'block' : 'none' }}
               >
                 <ul>
-                  {state.cart.items.map((pizza) => (
+                  {globalState.cart.items.map((pizza) => (
                     <li key={pizza.id}>
                       {pizza.name} &times; {pizza.quantity}
                     </li>

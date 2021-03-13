@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { useSetState } from './AppState';
+import { useDispatch } from './AppState';
 import PizzaCSS from './Pizza.module.css';
 
 interface Pizza {
@@ -14,26 +14,12 @@ interface Props {
 }
 
 const Pizza: FC<Props> = ({ pizza }) => {
-  const setState = useSetState();
+  const dispatch = useDispatch();
 
   const handleAddToCartClick = () => {
-    setState((prevState) => {
-      const itemExists = prevState.cart.items.find(
-        (item) => item.id === pizza.id
-      );
-      const newItems = [...prevState.cart.items];
-      if (itemExists) {
-        const item = newItems.find((p) => p.id === pizza.id);
-        item!.quantity += 1;
-      } else {
-        newItems.push({
-          id: pizza.id,
-          name: pizza.name,
-          price: pizza.price,
-          quantity: 1,
-        });
-      }
-      return { ...prevState, cart: { ...prevState.cart, items: newItems } };
+    dispatch({
+      type: 'ADD_TO_CART',
+      payload: { item: pizza },
     });
   };
 
