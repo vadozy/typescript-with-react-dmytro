@@ -5,8 +5,15 @@ import Cart from './Cart';
 import AppCSS from './App.module.css';
 import PizzaSVG from '../svg/pizza.svg';
 import AppStateProvider from './AppState';
+import SpecialOffer from './SpecialOffer';
 
 const App = () => {
+  const specialOfferPizza = pizzas.find((pizza) => pizza.specialOffer);
+
+  const specialOfferReactElement = specialOfferPizza && (
+    <SpecialOffer pizza={specialOfferPizza}></SpecialOffer>
+  );
+
   return (
     <AppStateProvider>
       <div className={AppCSS.container}>
@@ -15,8 +22,9 @@ const App = () => {
           <div className={AppCSS.siteTitle}>Delicious Pizza</div>
           <Cart />
         </div>
-        <ul>
-          {pizzas.map(p => (
+        {specialOfferReactElement}
+        <ul className={AppCSS.pizzaList}>
+          {pizzas.map((p) => (
             <Pizza key={p.id} pizza={p} />
           ))}
         </ul>
