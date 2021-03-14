@@ -1,4 +1,4 @@
-import React, { ComponentType, FC } from 'react';
+import React, { ComponentType } from 'react';
 import { useDispatch } from './AppState';
 import { Pizza } from '../types';
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { createRef } from 'react';
 import { FiShoppingCart } from 'react-icons/fi';
 import CartCSS from './Cart.module.css';
 import { AppStateContext } from './AppState';
@@ -10,6 +10,8 @@ interface State {
 }
 
 class Cart extends React.Component<Props, State> {
+  #containerRef = createRef<HTMLDivElement>();
+
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -18,10 +20,25 @@ class Cart extends React.Component<Props, State> {
   }
 
   handleClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    console.log(e.target);
-    console.log(e.currentTarget);
+    // console.log(e.target);
+    // console.log(e.currentTarget);
     this.setState((prevState) => ({ ...prevState, isOpen: !prevState.isOpen }));
   };
+
+  handleOutsideClick = (ev: MouseEvent) => {
+    // console.log(ev.target);
+    if (!this.#containerRef.current?.contains(ev.target as Node)) {
+      this.setState({ ...this.state, isOpen: false });
+    }
+  };
+
+  componentDidMount() {
+    document.addEventListener('mousedown', this.handleOutsideClick);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('mousedown', this.handleOutsideClick);
+  }
 
   render() {
     return (
@@ -32,7 +49,7 @@ class Cart extends React.Component<Props, State> {
             0
           );
           return (
-            <div className={CartCSS.cartContainer}>
+            <div className={CartCSS.cartContainer} ref={this.#containerRef}>
               <button
                 className={CartCSS.button}
                 type='button'
